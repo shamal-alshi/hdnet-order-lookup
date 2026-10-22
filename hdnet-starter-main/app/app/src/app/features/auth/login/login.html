@@ -1,0 +1,49 @@
+<main class="login-page">
+  <section class="login-panel" aria-labelledby="login-title">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">H</span>
+      <span>HDNet</span>
+    </div>
+
+    <div class="intro">
+      <p class="eyebrow">PHARMACY HOME DELIVERY</p>
+      <h1 id="login-title">Welcome back</h1>
+      <p class="description">
+        Sign in to look up and manage home-delivery orders.
+      </p>
+    </div>
+
+    <mat-card appearance="outlined">
+      <form [formGroup]="loginForm">
+        <mat-form-field appearance="outline">
+          <mat-label>Username</mat-label>
+          <input
+            matInput
+            formControlName="username"
+            autocomplete="username"
+            required
+          />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Password</mat-label>
+          <input
+            matInput
+            type="password"
+            formControlName="password"
+            autocomplete="current-password"
+            required
+          />
+        </mat-form-field>
+
+        <button mat-flat-button type="button" class="sign-in-button">
+          Sign in
+        </button>
+      </form>
+    </mat-card>
+
+    <p class="support-text">
+      Use your assigned HDNet credentials to continue.
+    </p>
+  </section>
+</main>

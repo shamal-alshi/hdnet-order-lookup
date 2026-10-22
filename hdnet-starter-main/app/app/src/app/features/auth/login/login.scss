@@ -1,0 +1,105 @@
+:host {
+  display: block;
+  min-height: 100dvh;
+}
+
+.login-page {
+  box-sizing: border-box;
+  display: grid;
+  min-height: 100dvh;
+  place-items: center;
+  padding: 2rem;
+  background:
+    radial-gradient(circle at 18% 12%, rgb(37 99 235 / 14%), transparent 32rem),
+    #f8fafc;
+}
+
+.login-panel {
+  width: min(100%, 28rem);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  color: #172554;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.brand-mark {
+  display: grid;
+  width: 2rem;
+  height: 2rem;
+  place-items: center;
+  border-radius: 0.55rem;
+  background: #1d4ed8;
+  color: white;
+  font-size: 0.95rem;
+}
+
+.intro {
+  margin: 3rem 0 1.75rem;
+}
+
+.eyebrow {
+  margin: 0 0 0.65rem;
+  color: #2563eb;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+h1 {
+  margin: 0;
+  color: #0f172a;
+  font-size: clamp(2rem, 7vw, 2.6rem);
+  letter-spacing: -0.045em;
+}
+
+.description {
+  margin: 0.85rem 0 0;
+  color: #475569;
+  font-size: 1rem;
+  line-height: 1.55;
+}
+
+mat-card {
+  padding: 1.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 1.25rem 3.5rem rgb(15 23 42 / 8%);
+}
+
+form {
+  display: grid;
+  gap: 0.4rem;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.sign-in-button {
+  width: 100%;
+  min-height: 3rem;
+  margin-top: 0.5rem;
+  font-weight: 700;
+}
+
+.support-text {
+  margin: 1.25rem 0 0;
+  color: #64748b;
+  font-size: 0.82rem;
+  text-align: center;
+}
+
+@media (max-width: 480px) {
+  .login-page {
+    padding: 1.25rem;
+  }
+
+  mat-card {
+    padding: 1.25rem;
+  }
+}
