@@ -1,0 +1,94 @@
+<mat-toolbar class="app-toolbar">
+  <div class="brand">
+    <span class="brand-mark" aria-hidden="true">H</span>
+    <span>HDNet</span>
+  </div>
+
+  <span class="toolbar-spacer"></span>
+
+  @if (user(); as user) {
+    <span class="user-name">{{ user.displayName }}</span>
+  }
+
+  <button mat-button type="button" (click)="signOut()">Sign out</button>
+</mat-toolbar>
+
+<main class="orders-shell">
+  <header class="page-header">
+    <div>
+      <p class="eyebrow">ORDER OPERATIONS</p>
+      <h1>Order lookup</h1>
+      <p>Review pharmacy home-delivery orders and their current status.</p>
+    </div>
+  </header>
+
+  <section class="orders-card" aria-label="Orders">
+    @if (store.isLoading()) {
+      <div class="loading-state">
+        <div class="skeleton-line wide"></div>
+        <div class="skeleton-line"></div>
+        <div class="skeleton-line"></div>
+        <div class="skeleton-line"></div>
+        <p>Loading orders...</p>
+      </div>
+    } @else if (store.error()) {
+      <div class="message-state error-state">
+        <p>Orders could not be loaded.</p>
+        <button mat-stroked-button type="button" (click)="store.load()">
+          Try again
+        </button>
+      </div>
+    } @else if (store.items().length === 0) {
+      <div class="message-state">
+        <p>No orders found.</p>
+      </div>
+    } @else {
+      <div class="table-wrap">
+        <table mat-table [dataSource]="store.items()">
+          <ng-container matColumnDef="orderNumber">
+            <th mat-header-cell *matHeaderCellDef>Order #</th>
+            <td mat-cell *matCellDef="let order" class="order-number">
+              {{ order.orderNumber }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="orderDate">
+            <th mat-header-cell *matHeaderCellDef>Order Date</th>
+            <td mat-cell *matCellDef="let order">{{ order.orderDate }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef>Status</th>
+            <td mat-cell *matCellDef="let order">
+              <app-status-chip [status]="order.status" />
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="rxCount">
+            <th mat-header-cell *matHeaderCellDef>Rx Count</th>
+            <td mat-cell *matCellDef="let order" class="numeric-value">
+              {{ order.rxCount }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="shipToState">
+            <th mat-header-cell *matHeaderCellDef>Ship-To State</th>
+            <td mat-cell *matCellDef="let order">{{ order.shipToState }}</td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+      </div>
+
+      <mat-paginator
+        [length]="store.totalItems()"
+        [pageIndex]="store.page()"
+        [pageSize]="store.pageSize()"
+        [pageSizeOptions]="[25, 50, 100]"
+        showFirstLastButtons
+        (page)="changePage($event)"
+      />
+    }
+  </section>
+</main>

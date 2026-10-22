@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './core/auth.guard';
+import { roleGuard } from './core/role.guard';
 
 export const routes: Routes = [
   {
@@ -11,9 +12,9 @@ export const routes: Routes = [
   },
   {
     path: 'orders',
-    canActivate: [authGuard],
+    canActivate: [authGuard, roleGuard('HDNet Viewer')],
     loadComponent: () =>
-      import('./features/order/orders-page/orders-page').then(
+      import('./features/orders/orders-page/orders-page').then(
         (module) => module.OrdersPage,
       ),
   },
