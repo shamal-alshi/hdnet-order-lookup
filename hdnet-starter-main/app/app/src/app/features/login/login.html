@@ -5,24 +5,19 @@
         <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
         <span>HDNet</span>
       </div>
-      <button class="theme-toggle" type="button" (click)="theme.toggle()" [attr.aria-label]="theme.theme() === 'light' ? 'Switch to dark theme' : 'Switch to light theme'">
-        <span class="theme-toggle-track" aria-hidden="true">
-          <svg viewBox="0 0 24 24" class="sun-icon"><path d="M12 3v2m0 14v2M3 12h2m14 0h2m-3.64-5.36 1.41-1.41M5.22 18.78l1.41-1.41m0-10.73L5.22 5.22m13.56 13.56-1.41-1.41M15.5 12a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z" /></svg>
-          <svg viewBox="0 0 24 24" class="moon-icon"><path d="M20.5 14.4A8.4 8.4 0 0 1 9.6 3.5 8.4 8.4 0 1 0 20.5 14.4Z" /></svg>
-        </span>
-      </button>
+      <span class="secure-label">Secure staff access</span>
     </div>
 
     <header class="intro">
       <p class="eyebrow">HOME DELIVERY OPERATIONS</p>
-      <h1 id="login-title">Care, delivered<br /><em>with clarity.</em></h1>
-      <p>Access the HDNet workspace to oversee pharmacy home-delivery orders from receipt through fulfilment.</p>
+      <h1 id="login-title">Welcome back.</h1>
+      <p>Sign in to review pharmacy home-delivery orders and take action when you are authorised.</p>
     </header>
 
     <mat-card appearance="outlined">
       <div class="card-heading">
-        <h2>Your workspace awaits</h2>
-        <p>Enter your assigned staff credentials to continue.</p>
+        <h2>Sign in to HDNet</h2>
+        <p>Use your assigned staff credentials.</p>
       </div>
       <form [formGroup]="form" (ngSubmit)="submit()">
         <mat-form-field appearance="outline">
@@ -42,14 +37,11 @@
           <mat-label>Password</mat-label>
           <input
             matInput
-            [type]="isPasswordVisible() ? 'text' : 'password'"
+            type="password"
             formControlName="password"
             autocomplete="current-password"
             required
           />
-          <button class="password-toggle" matSuffix type="button" (click)="togglePasswordVisibility()" [attr.aria-label]="isPasswordVisible() ? 'Hide password' : 'Show password'">
-            {{ isPasswordVisible() ? '🙈' : '👁️' }}
-          </button>
           @if (form.controls.password.touched && form.controls.password.invalid) {
             <mat-error>Enter your password.</mat-error>
           }

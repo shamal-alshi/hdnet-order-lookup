@@ -37,15 +37,6 @@ body {
   height: 100%;
 }
 
-html.dark-theme {
-  color-scheme: dark;
-}
-
-html.dark-theme body {
-  background: #091c2d;
-  color: #e7eef4;
-}
-
 .toast-error .mat-mdc-snackbar-surface {
   background: #8d1c1c !important;
 }
