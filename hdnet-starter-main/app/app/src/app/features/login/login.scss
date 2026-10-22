@@ -4,28 +4,26 @@
 }
 
 .login-page {
-  box-sizing: border-box;
   display: grid;
   min-height: 100dvh;
   place-items: center;
   padding: 2rem;
   background:
-    radial-gradient(circle at 18% 12%, rgb(37 99 235 / 14%), transparent 32rem),
+    radial-gradient(circle at 20% 15%, rgb(59 130 246 / 16%), transparent 28rem),
     #f8fafc;
 }
 
 .login-panel {
-  width: min(100%, 28rem);
+  width: min(100%, 29rem);
 }
 
 .brand {
   display: inline-flex;
   align-items: center;
   gap: 0.65rem;
-  color: #172554;
-  font-size: 1.1rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
+  color: #0f172a;
+  font-size: 1.05rem;
+  font-weight: 750;
 }
 
 .brand-mark {
@@ -36,15 +34,15 @@
   border-radius: 0.55rem;
   background: #1d4ed8;
   color: white;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
 }
 
 .intro {
-  margin: 3rem 0 1.75rem;
+  margin: 2.75rem 0 1.75rem;
 }
 
 .eyebrow {
-  margin: 0 0 0.65rem;
+  margin: 0 0 0.75rem;
   color: #2563eb;
   font-size: 0.72rem;
   font-weight: 700;
@@ -54,15 +52,15 @@
 h1 {
   margin: 0;
   color: #0f172a;
-  font-size: clamp(2rem, 7vw, 2.6rem);
-  letter-spacing: -0.045em;
+  font-size: clamp(2.15rem, 7vw, 3rem);
+  letter-spacing: -0.055em;
+  line-height: 1.05;
 }
 
-.description {
-  margin: 0.85rem 0 0;
-  color: #475569;
-  font-size: 1rem;
-  line-height: 1.55;
+.intro p:last-child {
+  margin: 1rem 0 0;
+  color: #64748b;
+  line-height: 1.6;
 }
 
 mat-card {
@@ -76,30 +74,22 @@ form {
   gap: 0.4rem;
 }
 
-mat-form-field {
+mat-form-field,
+button {
   width: 100%;
 }
 
-.sign-in-button {
-  width: 100%;
+button {
   min-height: 3rem;
-  margin-top: 0.5rem;
+  margin-top: 0.35rem;
   font-weight: 700;
 }
 
-.support-text {
-  margin: 1.25rem 0 0;
-  color: #64748b;
-  font-size: 0.82rem;
-  text-align: center;
-}
-
-@media (max-width: 480px) {
-  .login-page {
-    padding: 1.25rem;
-  }
-
-  mat-card {
-    padding: 1.25rem;
-  }
+.error-message {
+  margin: 0 0 0.75rem;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  background: #fef2f2;
+  color: #b91c1c;
+  font-size: 0.875rem;
 }

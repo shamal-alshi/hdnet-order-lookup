@@ -1,0 +1,20 @@
+<mat-toolbar class="app-toolbar">
+  <div class="brand">
+    <span class="brand-mark" aria-hidden="true">H</span>
+    <span>HDNet</span>
+  </div>
+
+  <span class="toolbar-spacer"></span>
+
+  @if (user(); as user) {
+    <span class="user-name">{{ user.displayName }}</span>
+  }
+
+  <button mat-button type="button" (click)="signOut()">Sign out</button>
+</mat-toolbar>
+
+<main class="orders-shell">
+  <p class="eyebrow">ORDER OPERATIONS</p>
+  <h1>Order lookup</h1>
+  <p>Your pharmacy home-delivery orders will appear here.</p>
+</main>

@@ -5,16 +5,18 @@
       <span>HDNet</span>
     </div>
 
-    <div class="intro">
+    <header class="intro">
       <p class="eyebrow">PHARMACY HOME DELIVERY</p>
-      <h1 id="login-title">Welcome back</h1>
-      <p class="description">
-        Sign in to look up and manage home-delivery orders.
-      </p>
-    </div>
+      <h1 id="login-title">Order operations, simplified.</h1>
+      <p>Sign in to view and manage pharmacy home-delivery orders.</p>
+    </header>
 
     <mat-card appearance="outlined">
-      <form [formGroup]="loginForm">
+      <form [formGroup]="form" (ngSubmit)="submit()">
+        @if (errorMessage(); as message) {
+          <p class="error-message" role="alert">{{ message }}</p>
+        }
+
         <mat-form-field appearance="outline">
           <mat-label>Username</mat-label>
           <input
@@ -23,6 +25,9 @@
             autocomplete="username"
             required
           />
+          @if (form.controls.username.touched && form.controls.username.invalid) {
+            <mat-error>Enter your username.</mat-error>
+          }
         </mat-form-field>
 
         <mat-form-field appearance="outline">
@@ -34,16 +39,19 @@
             autocomplete="current-password"
             required
           />
+          @if (form.controls.password.touched && form.controls.password.invalid) {
+            <mat-error>Enter your password.</mat-error>
+          }
         </mat-form-field>
 
-        <button mat-flat-button type="button" class="sign-in-button">
-          Sign in
+        <button
+          mat-flat-button
+          type="submit"
+          [disabled]="isSubmitting()"
+        >
+          {{ isSubmitting() ? 'Signing in…' : 'Sign in' }}
         </button>
       </form>
     </mat-card>
-
-    <p class="support-text">
-      Use your assigned HDNet credentials to continue.
-    </p>
   </section>
 </main>

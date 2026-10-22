@@ -1,0 +1,54 @@
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { finalize } from 'rxjs';
+import { AuthStore } from '../../core/auth.store';
+
+@Component({
+  selector: 'app-login',
+  imports: [
+    ReactiveFormsModule,
+    MatButtonModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+  ],
+  templateUrl: './login.html',
+  styleUrl: './login.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class Login {
+  private readonly formBuilder = inject(FormBuilder).nonNullable;
+  private readonly auth = inject(AuthStore);
+  private readonly router = inject(Router);
+
+  protected readonly isSubmitting = signal(false);
+  protected readonly errorMessage = signal<string | null>(null);
+
+  protected readonly form = this.formBuilder.group({
+    username: ['', Validators.required],
+    password: ['', Validators.required],
+  });
+
+  protected submit(): void {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
+
+    this.errorMessage.set(null);
+    this.isSubmitting.set(true);
+
+    this.auth
+      .login(this.form.getRawValue())
+      .pipe(finalize(() => this.isSubmitting.set(false)))
+      .subscribe({
+        next: () => void this.router.navigateByUrl('/orders'),
+        error: () => this.errorMessage.set('Invalid username or password.'),
+      });
+  }
+}
