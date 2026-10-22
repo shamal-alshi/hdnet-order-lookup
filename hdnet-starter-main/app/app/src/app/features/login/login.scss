@@ -60,8 +60,14 @@
 .brand-mark i:nth-child(2) { height: 0.82rem; }
 .brand-mark i:nth-child(3) { height: 1.18rem; }
 
+.secure-label {
+  color: #9fb2c5;
+  font-size: 0.74rem;
+  font-weight: 650;
+}
+
 .intro {
-  margin: 3.25rem 0 1.5rem;
+  margin: 4rem 0 1.7rem;
 }
 
 .eyebrow {
@@ -124,25 +130,14 @@ form {
 }
 
 mat-form-field,
-form > button {
+button {
   width: 100%;
 }
 
-form > button {
+button {
   min-height: 3.1rem;
   margin-top: 0.45rem;
   font-weight: 720;
-}
-
-.password-toggle {
-  width: 2.25rem;
-  min-height: 2.25rem;
-  margin: 0 0.2rem 0 0;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  font-size: 1rem;
-  cursor: pointer;
 }
 
 .support-text {

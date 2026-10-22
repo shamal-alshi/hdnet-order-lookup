@@ -5,17 +5,19 @@
         <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
         <span>HDNet</span>
       </div>
+      <span class="secure-label">Secure staff access</span>
     </div>
 
     <header class="intro">
       <p class="eyebrow">HOME DELIVERY OPERATIONS</p>
       <h1 id="login-title">Welcome back.</h1>
-      <p>Sign in to access order operations.</p>
+      <p>Sign in to review pharmacy home-delivery orders and take action when you are authorised.</p>
     </header>
 
     <mat-card appearance="outlined">
       <div class="card-heading">
-        <h2>Sign in</h2>
+        <h2>Sign in to HDNet</h2>
+        <p>Use your assigned staff credentials.</p>
       </div>
       <form [formGroup]="form" (ngSubmit)="submit()">
         <mat-form-field appearance="outline">
@@ -35,20 +37,11 @@
           <mat-label>Password</mat-label>
           <input
             matInput
-            [type]="isPasswordVisible() ? 'text' : 'password'"
+            type="password"
             formControlName="password"
             autocomplete="current-password"
             required
           />
-          <button
-            class="password-toggle"
-            matSuffix
-            type="button"
-            (click)="togglePasswordVisibility()"
-            [attr.aria-label]="isPasswordVisible() ? 'Hide password' : 'Show password'"
-          >
-            {{ isPasswordVisible() ? '🙈' : '👁️' }}
-          </button>
           @if (form.controls.password.touched && form.controls.password.invalid) {
             <mat-error>Enter your password.</mat-error>
           }
@@ -63,5 +56,6 @@
         </button>
       </form>
     </mat-card>
+    <p class="support-text">Need help accessing HDNet? Contact your team administrator.</p>
   </section>
 </main>

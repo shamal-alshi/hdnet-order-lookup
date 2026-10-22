@@ -28,7 +28,6 @@ export class Login {
   private readonly toast = inject(ToastService);
 
   protected readonly isSubmitting = signal(false);
-  protected readonly isPasswordVisible = signal(false);
 
   protected readonly form = this.formBuilder.group({
     username: ['', Validators.required],
@@ -50,9 +49,5 @@ export class Login {
         next: () => void this.router.navigateByUrl('/orders'),
         error: () => this.toast.error('Invalid username or password.'),
       });
-  }
-
-  protected togglePasswordVisibility(): void {
-    this.isPasswordVisible.update((visible) => !visible);
   }
 }

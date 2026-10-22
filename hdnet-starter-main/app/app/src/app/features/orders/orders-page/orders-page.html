@@ -7,12 +7,9 @@
   <span class="toolbar-spacer"></span>
 
   @if (user(); as user) {
-    <span class="user-name">{{ user.roles.includes('HDNet Cancel') ? 'Agent' : 'Viewer' }}</span>
+    <span class="user-name">{{ user.displayName }}</span>
   }
 
-  <button class="theme-toggle" mat-button type="button" (click)="theme.toggle()">
-    {{ theme.theme() === 'light' ? '☾ Dark' : '☀ Light' }}
-  </button>
   <button mat-button type="button" (click)="signOut()">Sign Out</button>
 </mat-toolbar>
 
