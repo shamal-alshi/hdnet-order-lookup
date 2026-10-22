@@ -1,9 +1,5 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  OnInit,
-  inject,
-} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
@@ -12,12 +8,15 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { StatusChipComponent } from '../status-chip.component';
 import { AuthStore } from '../../../core/auth.store';
 import { OrdersStore } from '../orders.store';
+import { CancelOrderDialogComponent } from '../cancel-order-dialog/cancel-order-dialog';
+import { Order } from '../../../shared/models';
 
 
 @Component({
   selector: 'app-orders-page',
   imports: [
     MatButtonModule,
+    MatDialogModule,
     MatPaginatorModule,
     MatTableModule,
     MatToolbarModule,
@@ -25,11 +24,11 @@ import { OrdersStore } from '../orders.store';
   ],
   templateUrl: './orders-page.html',
   styleUrl: './orders-page.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OrdersPage implements OnInit {
   private readonly auth = inject(AuthStore);
   private readonly router = inject(Router);
+  private readonly dialog = inject(MatDialog);
 
   protected readonly store = inject(OrdersStore);
   protected readonly user = this.auth.user;
@@ -40,6 +39,7 @@ export class OrdersPage implements OnInit {
     'status',
     'rxCount',
     'shipToState',
+    'actions',
   ];
 
   ngOnInit(): void {
@@ -53,5 +53,23 @@ export class OrdersPage implements OnInit {
   protected signOut(): void {
     this.auth.clearSession();
     void this.router.navigateByUrl('/login');
+  }
+
+  protected canCancel(order: Order): boolean {
+    return (
+      this.auth.hasRole('HDNet Cancel') &&
+      (order.status === 'RECEIVED' || order.status === 'PROCESSING')
+    );
+  }
+
+  protected openCancelDialog(order: Order): void {
+    this.dialog
+      .open(CancelOrderDialogComponent, { data: order, width: '30rem' })
+      .afterClosed()
+      .subscribe((updatedOrder: Order | undefined) => {
+        if (updatedOrder) {
+          this.store.replaceOrder(updatedOrder);
+        }
+      });
   }
 }

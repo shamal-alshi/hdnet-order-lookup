@@ -1,9 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  input,
-} from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 import { OrderStatus } from '../../shared/models';
 
 
@@ -57,7 +52,6 @@ import { OrderStatus } from '../../shared/models';
       color: #b91c1c;
     }
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StatusChipComponent {
   readonly status = input.required<OrderStatus>();

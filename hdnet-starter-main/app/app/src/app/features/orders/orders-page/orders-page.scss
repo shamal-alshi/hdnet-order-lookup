@@ -109,6 +109,20 @@ tr.mat-mdc-row:hover {
   font-variant-numeric: tabular-nums;
 }
 
+.actions-cell {
+  width: 1%;
+  white-space: nowrap;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
 .loading-state,
 .message-state {
   display: grid;

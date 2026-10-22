@@ -1,0 +1,32 @@
+<h2 mat-dialog-title>Cancel order</h2>
+
+<mat-dialog-content>
+  <p>Cancel <strong>{{ order.orderNumber }}</strong>? This action cannot be undone.</p>
+
+  @if (errorMessage(); as message) {
+    <p class="error-message" role="alert">{{ message }}</p>
+  }
+
+  <form [formGroup]="form" id="cancel-order-form" (ngSubmit)="cancelOrder()">
+    <mat-form-field appearance="outline">
+      <mat-label>Reason</mat-label>
+      <mat-select formControlName="reason" required>
+        @for (reason of reasons; track reason.value) {
+          <mat-option [value]="reason.value">{{ reason.label }}</mat-option>
+        }
+      </mat-select>
+      @if (form.controls.reason.touched && form.controls.reason.invalid) {
+        <mat-error>Select a reason.</mat-error>
+      }
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button type="button" [disabled]="isSubmitting()" mat-dialog-close>
+    Keep Order
+  </button>
+  <button mat-flat-button type="submit" form="cancel-order-form" [disabled]="isSubmitting()">
+    {{ isSubmitting() ? 'Cancelling…' : 'Cancel Order' }}
+  </button>
+</mat-dialog-actions>

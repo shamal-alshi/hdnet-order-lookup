@@ -90,4 +90,13 @@ export class OrdersStore {
   load(page = this.page(), size = this.pageSize()): void {
     this.pageRequests.next({ page, size });
   }
+
+  replaceOrder(updatedOrder: Order): void {
+    this.state.update((state) => ({
+      ...state,
+      items: state.items.map((order) =>
+        order.orderNumber === updatedOrder.orderNumber ? updatedOrder : order,
+      ),
+    }));
+  }
 }

@@ -45,3 +45,15 @@ export interface OrdersResponse {
   size: number;
   totalItems: number;
 }
+
+export type CancelReason =
+  | 'CUSTOMER_REQUEST'
+  | 'DUPLICATE_ORDER'
+  | 'ADDRESS_ISSUE'
+  | 'OTHER';
+
+export interface ApiError {
+  error: string;
+  message: string;
+  order?: Order;
+}
