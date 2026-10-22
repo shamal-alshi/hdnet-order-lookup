@@ -1,19 +1,19 @@
 # HDNet Order Lookup
 
-Internal order operations for pharmacy home-delivery staff. The application supports viewer and cancellation roles, server-side paging, and a guarded cancellation flow.
+An Angular application for pharmacy home-delivery staff to sign in, review orders, and cancel eligible orders. It uses the supplied local mock API.
 
 ## Run locally
 
-Node.js 18 or later is required.
+Node.js 18+ is required.
 
-In one terminal, start the mock API:
+Start the API in one terminal:
 
 ```bash
 cd mock-api
 npm start
 ```
 
-In another, start the Angular application:
+Start the Angular app in another:
 
 ```bash
 cd app/app
@@ -21,7 +21,12 @@ npm install
 npm start
 ```
 
-Open `http://localhost:4200`. Use `viewer` / `viewer123` for read-only access or `agent` / `agent123` to cancel eligible orders.
+Open `http://localhost:4200`.
+
+| User | Password | Access |
+| --- | --- | --- |
+| `viewer` | `viewer123` | View orders |
+| `agent` | `agent123` | View and cancel eligible orders |
 
 ## Tests and build
 
@@ -31,29 +36,55 @@ npm test
 npm run build
 ```
 
-The included tests cover the signed-out route guard and the cancel dialog’s success and failure behavior. With more time, I would add tests for the authentication interceptor, role-specific table actions, paging error recovery, and an end-to-end API flow.
+The included tests cover the signed-out route guard and the cancellation dialog’s success and failure behavior.
 
-## Design notes
+## What I built
 
-- The app uses standalone components, lazy-loaded route components, Angular signals for local and shared state, and an RxJS request stream for page changes. The app runs zoneless; explicit `OnPush` configuration is not needed.
-- `AuthStore` keeps the active session in memory and mirrors it to `sessionStorage` so a browser refresh keeps the user signed in for that tab. The interceptor adds the access token only to protected API requests and signs the user out if the API returns `401`.
-- `OrdersStore` owns the table state and uses `switchMap` so a newer paging request supersedes an older one. A successful cancellation replaces only that order in the current page rather than refetching it.
-- Angular Material supplies accessible form controls, dialog semantics, table behavior, and paginator controls. No extra runtime libraries were added.
+- Sign-in with validation, login error feedback, and a show/hide password control.
+- Protected `/orders` route for users with the `HDNet Viewer` role.
+- Bearer-token HTTP interceptor for protected API requests. It clears the session and redirects to sign-in after a `401` response.
+- Paged order table with loading, empty, and error states.
+- Role-based Cancel action for orders in `RECEIVED` or `PROCESSING` status.
+- Confirmation dialog with a required cancellation reason. A successful cancellation updates the row without reloading the current page; a rejected cancellation keeps the dialog open and shows the API message.
+- Compact order workspace: fixed header, independently scrollable table, sticky column headers, and centered pagination.
 
-## Remaining work
+## Project structure
 
-The requested functionality is complete. Production work would add automated end-to-end coverage, a shared error-reporting strategy, session-expiry messaging, and server-provided user identity rather than trusting role claims from a client-readable token.
+```text
+app/app/src/app/
+├── core/       # Authentication store, route guards, interceptor, toast service
+├── features/   # Login and orders features (page, API, store, dialog)
+├── shared/     # Shared order, role, and session types
+├── app.routes.ts
+└── app.config.ts
+```
 
-## Security questions
+The app uses standalone components and lazy-loaded routes. `core` contains cross-cutting concerns, while each feature keeps its UI and feature-specific logic together.
 
-### A. Access token storage
+## Main design decisions
 
-For a browser-only application, an in-memory token is the safest option against persistent XSS theft, but it is lost on refresh. This app also uses `sessionStorage` to preserve the tab session, accepting that JavaScript can read it if an XSS vulnerability exists; it is cleared when the tab session ends. For an application with a supporting backend, I would prefer short-lived access tokens with refresh tokens in `HttpOnly`, `Secure`, `SameSite` cookies, plus CSRF protection where appropriate. Regardless of storage, the API must enforce authorization because client role checks are only a UI convenience.
+- **Signals for state:** `AuthStore` and `OrdersStore` use writable Angular signals internally and expose computed/readonly state to the UI. This keeps the current user, access token, orders, paging, loading, and error state easy to follow.
+- **Server-side pagination:** the API returns one page at a time, so pagination is handled on the server and newer page requests replace older ones using `switchMap`.
+- **Authorization:** route and UI role checks improve the user experience, but the API is still responsible for enforcing permissions and cancellation rules.
+- **Session handling:** the session is kept in memory and mirrored to `sessionStorage` so a browser refresh preserves the current tab session.
+- **UI:** Angular Material provides the form controls, dialog, table, paginator, and accessibility foundations without adding another UI library.
 
-### B. CLIENT_SECRET in app.config.json
+## Not included / next steps
 
-Yes. A client secret shipped to a browser is not secret: any user can inspect the application bundle, configuration, or network activity. The value should be removed from front-end configuration, revoked and rotated if it was real, and held only by a trusted backend or a suitable identity-provider flow. Public browser configuration may contain non-sensitive identifiers and URLs, but never credentials capable of authenticating the application.
+Search and filters were not part of the exercise requirements, so I prioritized the required server-side pagination, role-based cancellation flow, and error handling within the time limit. In a real operations tool, I would add server-backed search and filters (for example, by order number, status, or state) rather than filtering only the currently loaded page.
+
+With more time, I would also add tests for the interceptor, role-specific actions, pagination errors, and login submission, plus end-to-end coverage for the main flows and a production session-expiry experience.
+
+## Security notes
+
+### A. Access-token storage
+
+The safest browser-only option against persistent XSS theft is an in-memory token, but it is lost after a refresh. This app also uses `sessionStorage` to keep the user signed in for the current tab, accepting that an XSS vulnerability could read it. In production, I would prefer short-lived access tokens with refresh tokens in `HttpOnly`, `Secure`, `SameSite` cookies and appropriate CSRF protections. The API must always enforce authorization regardless of where the token is stored.
+
+### B. `CLIENT_SECRET` in front-end configuration
+
+Yes, it is a problem. A browser-delivered secret can be read from application files or developer tools and is therefore not secret. It should be removed from front-end configuration and rotated if it was real. Secrets must remain on a trusted backend or with the identity provider; a browser app may only contain public configuration such as API URLs and client IDs.
 
 ## AI assistance
 
-AI assistance was used to review the exercise requirements, help identify missing implementation areas, and draft code and tests. The resulting implementation was reviewed locally, built, and tested against the supplied mock API.
+I used AI as an implementation aid for styling and template structure, including the login and orders layout refinements and the password-visibility control. I reviewed and adapted the suggestions to fit the existing Angular Material components, accessibility needs, and application flow. AI was also used to help organize this README; I reviewed the final implementation and documentation.
