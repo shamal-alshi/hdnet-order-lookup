@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { finalize } from 'rxjs';
 import { AuthStore } from '../../core/auth.store';
@@ -16,6 +17,7 @@ import { ToastService } from '../../core/toast.service';
     MatButtonModule,
     MatCardModule,
     MatFormFieldModule,
+    MatIconModule,
     MatInputModule,
   ],
   templateUrl: './login.html',
@@ -28,6 +30,7 @@ export class Login {
   private readonly toast = inject(ToastService);
 
   protected readonly isSubmitting = signal(false);
+  protected readonly passwordVisible = signal(false);
 
   protected readonly form = this.formBuilder.group({
     username: ['', Validators.required],
@@ -49,5 +52,9 @@ export class Login {
         next: () => void this.router.navigateByUrl('/orders'),
         error: () => this.toast.error('Invalid username or password.'),
       });
+  }
+
+  protected togglePasswordVisibility(): void {
+    this.passwordVisible.update((visible) => !visible);
   }
 }

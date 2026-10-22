@@ -1,4 +1,15 @@
+:host {
+  display: flex;
+  height: 100dvh;
+  flex-direction: column;
+  overflow: hidden;
+}
+
 .app-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  flex: 0 0 auto;
   min-height: 4.5rem;
   padding: 0 2.5rem;
   border-bottom: 1px solid #dce5ed;
@@ -37,16 +48,22 @@
 }
 
 .orders-shell {
-  max-width: 80rem;
+  display: flex;
+  width: min(100%, 80rem);
+  min-height: 0;
+  flex: 1 1 auto;
+  flex-direction: column;
   margin: 0 auto;
-  padding: 4rem 2.5rem;
+  padding: 1.5rem 2.5rem;
+  box-sizing: border-box;
 }
 
 .page-header {
   display: flex;
   align-items: end;
   justify-content: space-between;
-  margin-bottom: 2.2rem;
+  flex: 0 0 auto;
+  margin-bottom: 1.25rem;
 }
 
 .eyebrow {
@@ -73,6 +90,10 @@ h1 {
 }
 
 .orders-card {
+  display: flex;
+  min-height: 0;
+  flex: 1 1 auto;
+  flex-direction: column;
   overflow: hidden;
   border: 1px solid #dce5ed;
   border-radius: 1.1rem;
@@ -80,7 +101,11 @@ h1 {
   box-shadow: 0 1.2rem 3rem rgb(23 49 73 / 8%);
 }
 
-.table-wrap { overflow-x: auto; }
+.table-wrap {
+  min-height: 0;
+  flex: 1 1 auto;
+  overflow: auto;
+}
 table { width: 100%; }
 
 th {
@@ -101,6 +126,20 @@ tr.mat-mdc-row:hover { background: #f3faf9; box-shadow: inset 3px 0 #20a58d; }
 .order-number { color: #0d5265; font-weight: 760; letter-spacing: 0.01em; }
 .numeric-value { font-variant-numeric: tabular-nums; }
 .actions-cell { width: 1%; white-space: nowrap; }
+
+mat-paginator {
+  flex: 0 0 auto;
+  border-top: 1px solid #e8eef2;
+}
+
+mat-paginator ::ng-deep .mat-mdc-paginator-container {
+  justify-content: center;
+}
+
+mat-paginator ::ng-deep .mat-mdc-paginator-page-size,
+mat-paginator ::ng-deep .mat-mdc-paginator-range-actions {
+  flex: 0 0 auto;
+}
 
 .visually-hidden {
   position: absolute;
@@ -145,6 +184,6 @@ tr.mat-mdc-row:hover { background: #f3faf9; box-shadow: inset 3px 0 #20a58d; }
   .app-toolbar,
   .orders-shell { padding-right: 1rem; padding-left: 1rem; }
   .user-name { display: none; }
-  .orders-shell { padding-top: 2.25rem; }
-  .page-header { margin-bottom: 1.5rem; }
+  .orders-shell { padding-top: 1.25rem; padding-bottom: 1rem; }
+  .page-header { margin-bottom: 1rem; }
 }
