@@ -11,6 +11,7 @@ import { OrdersStore } from '../orders.store';
 import { CancelOrderDialogComponent } from '../cancel-order-dialog/cancel-order-dialog';
 import { Order } from '../../../shared/models';
 import { ToastService } from '../../../core/toast.service';
+import { ThemeService } from '../../../core/theme.service';
 
 
 @Component({
@@ -32,6 +33,7 @@ export class OrdersPage implements OnInit {
   private readonly router = inject(Router);
   private readonly dialog = inject(MatDialog);
   private readonly toast = inject(ToastService);
+  protected readonly theme = inject(ThemeService);
 
   protected readonly store = inject(OrdersStore);
   protected readonly user = this.auth.user;
