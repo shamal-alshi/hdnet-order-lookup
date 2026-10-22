@@ -4,6 +4,7 @@ import { environment } from '../../../environments/environment';
 import { CancelReason, Order, OrdersResponse } from '../../shared/models';
 
 @Injectable({ providedIn: 'root' })
+/** Encapsulates the order endpoints used by the lookup experience. */
 export class OrdersApi {
   private readonly http = inject(HttpClient);
 

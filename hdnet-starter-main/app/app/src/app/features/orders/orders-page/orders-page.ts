@@ -25,6 +25,7 @@ import { Order } from '../../../shared/models';
   templateUrl: './orders-page.html',
   styleUrl: './orders-page.scss',
 })
+/** Displays the signed-in user's current page of pharmacy delivery orders. */
 export class OrdersPage implements OnInit {
   private readonly auth = inject(AuthStore);
   private readonly router = inject(Router);

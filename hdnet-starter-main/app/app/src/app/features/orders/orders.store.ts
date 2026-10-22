@@ -28,6 +28,7 @@ const initialState: OrdersState = {
 };
 
 @Injectable({ providedIn: 'root' })
+/** Coordinates paged order data so rapid page changes keep only the newest response. */
 export class OrdersStore {
   private readonly api = inject(OrdersApi);
   private readonly pageRequests = new Subject<PageRequest>();

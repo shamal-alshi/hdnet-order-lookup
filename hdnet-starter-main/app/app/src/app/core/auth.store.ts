@@ -43,6 +43,7 @@ function readStoredSession(): AuthSession | null {
 }
 
 @Injectable({ providedIn: 'root' })
+/** Keeps the current tab's authenticated session available to routes and requests. */
 export class AuthStore {
   private readonly http = inject(HttpClient);
   private readonly sessionState = signal<AuthSession | null>(readStoredSession());

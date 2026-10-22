@@ -28,6 +28,7 @@ const cancelReasons: { value: CancelReason; label: string }[] = [
   templateUrl: './cancel-order-dialog.html',
   styleUrl: './cancel-order-dialog.scss',
 })
+/** Collects a cancellation reason and keeps the dialog open when the API rejects it. */
 export class CancelOrderDialogComponent {
   private readonly formBuilder = inject(FormBuilder).nonNullable;
   private readonly api = inject(OrdersApi);
