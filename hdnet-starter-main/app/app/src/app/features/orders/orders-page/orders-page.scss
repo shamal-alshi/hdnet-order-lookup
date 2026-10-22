@@ -1,4 +1,7 @@
 .app-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
   min-height: 4.5rem;
   padding: 0 2.5rem;
   border-bottom: 1px solid #dce5ed;
@@ -36,10 +39,15 @@
   font-weight: 650;
 }
 
+.theme-toggle {
+  margin-right: 0.2rem;
+  color: #36546a;
+}
+
 .orders-shell {
   max-width: 80rem;
   margin: 0 auto;
-  padding: 4rem 2.5rem;
+  padding: 2.25rem 2.5rem;
 }
 
 .page-header {
@@ -80,7 +88,10 @@ h1 {
   box-shadow: 0 1.2rem 3rem rgb(23 49 73 / 8%);
 }
 
-.table-wrap { overflow-x: auto; }
+.table-wrap {
+  max-height: calc(100dvh - 15.75rem);
+  overflow: auto;
+}
 table { width: 100%; }
 
 th {
@@ -96,7 +107,8 @@ th {
 }
 
 tr.mat-mdc-row { transition: background-color 160ms ease, box-shadow 160ms ease; }
-tr.mat-mdc-row:hover { background: #f3faf9; box-shadow: inset 3px 0 #20a58d; }
+tr.mat-mdc-row:hover { background: #e8f7f3; box-shadow: inset 3px 0 #20a58d; }
+tr.mat-mdc-row:hover td { color: #123b51; }
 
 .order-number { color: #0d5265; font-weight: 760; letter-spacing: 0.01em; }
 .numeric-value { font-variant-numeric: tabular-nums; }
@@ -145,6 +157,48 @@ tr.mat-mdc-row:hover { background: #f3faf9; box-shadow: inset 3px 0 #20a58d; }
   .app-toolbar,
   .orders-shell { padding-right: 1rem; padding-left: 1rem; }
   .user-name { display: none; }
-  .orders-shell { padding-top: 2.25rem; }
+  .orders-shell { padding-top: 1.5rem; }
   .page-header { margin-bottom: 1.5rem; }
+  .table-wrap { max-height: calc(100dvh - 14.5rem); }
+}
+
+:host-context(.dark-theme) .app-toolbar {
+  border-color: #2b4559;
+  background: rgb(11 23 34 / 96%);
+}
+
+:host-context(.dark-theme) .brand,
+:host-context(.dark-theme) h1,
+:host-context(.dark-theme) .app-toolbar button {
+  color: #edf5fa;
+}
+
+:host-context(.dark-theme) .user-name,
+:host-context(.dark-theme) .page-header p:last-child {
+  color: #b4c7d5;
+}
+
+:host-context(.dark-theme) .orders-card {
+  border-color: #2b4559;
+  background: #112535;
+  box-shadow: 0 1.2rem 3rem rgb(0 0 0 / 24%);
+}
+
+:host-context(.dark-theme) th {
+  background: #183246;
+  color: #c0d0da;
+}
+
+:host-context(.dark-theme) td {
+  color: #d6e2ea;
+}
+
+:host-context(.dark-theme) tr.mat-mdc-row:hover {
+  background: #1b3d4c;
+  box-shadow: inset 3px 0 #58d4ba;
+}
+
+:host-context(.dark-theme) tr.mat-mdc-row:hover td,
+:host-context(.dark-theme) .order-number {
+  color: #ffffff;
 }
