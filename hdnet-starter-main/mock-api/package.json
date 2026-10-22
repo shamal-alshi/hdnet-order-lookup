@@ -1,0 +1,13 @@
+{
+  "name": "hdnet-mock-api",
+  "version": "1.0.0",
+  "description": "Mock REST API for the HDNet Order Lookup take-home exercise.",
+  "private": true,
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

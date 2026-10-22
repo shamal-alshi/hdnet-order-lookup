@@ -1,0 +1,151 @@
+{
+  "info": {
+    "name": "HDNet Mock API",
+    "description": "Requests for the HDNet exercise mock API. Run the two login requests first; they save the tokens used by the rest.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:3000" },
+    { "key": "agentToken", "value": "" },
+    { "key": "viewerToken", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "1. Login - agent (view + cancel)",
+      "event": [{ "listen": "test", "script": { "exec": ["pm.collectionVariables.set('agentToken', pm.response.json().accessToken);"] } }],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": "{{baseUrl}}/auth/login",
+        "body": { "mode": "raw", "raw": "{\n  \"username\": \"agent\",\n  \"password\": \"agent123\"\n}" }
+      }
+    },
+    {
+      "name": "2. Login - viewer (view only)",
+      "event": [{ "listen": "test", "script": { "exec": ["pm.collectionVariables.set('viewerToken', pm.response.json().accessToken);"] } }],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": "{{baseUrl}}/auth/login",
+        "body": { "mode": "raw", "raw": "{\n  \"username\": \"viewer\",\n  \"password\": \"viewer123\"\n}" }
+      }
+    },
+    {
+      "name": "3. Login - wrong password (401)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": "{{baseUrl}}/auth/login",
+        "body": { "mode": "raw", "raw": "{\n  \"username\": \"agent\",\n  \"password\": \"wrong\"\n}" }
+      }
+    },
+    {
+      "name": "4. List orders - first page",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{agentToken}}" }],
+        "url": "{{baseUrl}}/orders?page=0&size=25"
+      }
+    },
+    {
+      "name": "5. List orders - last page (12 items)",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{agentToken}}" }],
+        "url": "{{baseUrl}}/orders?page=12&size=25"
+      }
+    },
+    {
+      "name": "6. List orders - no token (401)",
+      "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/orders" }
+    },
+    {
+      "name": "7. List orders - invalid size (400)",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{agentToken}}" }],
+        "url": "{{baseUrl}}/orders?size=0"
+      }
+    },
+    {
+      "name": "8. Cancel HD100312 - agent (200)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{agentToken}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "url": "{{baseUrl}}/orders/HD100312/cancel",
+        "body": { "mode": "raw", "raw": "{\n  \"reason\": \"CUSTOMER_REQUEST\"\n}" }
+      }
+    },
+    {
+      "name": "9. Cancel HD100312 again (409, already cancelled)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{agentToken}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "url": "{{baseUrl}}/orders/HD100312/cancel",
+        "body": { "mode": "raw", "raw": "{\n  \"reason\": \"CUSTOMER_REQUEST\"\n}" }
+      }
+    },
+    {
+      "name": "10. Cancel HD100310 - always rejected (409)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{agentToken}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "url": "{{baseUrl}}/orders/HD100310/cancel",
+        "body": { "mode": "raw", "raw": "{\n  \"reason\": \"OTHER\"\n}" }
+      }
+    },
+    {
+      "name": "11. Cancel HD100311 - viewer (403)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{viewerToken}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "url": "{{baseUrl}}/orders/HD100311/cancel",
+        "body": { "mode": "raw", "raw": "{\n  \"reason\": \"OTHER\"\n}" }
+      }
+    },
+    {
+      "name": "12. Cancel HD100311 - missing reason (400)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{agentToken}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "url": "{{baseUrl}}/orders/HD100311/cancel",
+        "body": { "mode": "raw", "raw": "{}" }
+      }
+    },
+    {
+      "name": "13. Cancel HD999999 - unknown order (404)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{agentToken}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "url": "{{baseUrl}}/orders/HD999999/cancel",
+        "body": { "mode": "raw", "raw": "{\n  \"reason\": \"OTHER\"\n}" }
+      }
+    },
+    {
+      "name": "14. Order detail HD100312 (not used in exercise)",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{agentToken}}" }],
+        "url": "{{baseUrl}}/orders/HD100312"
+      }
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "API_BASE_URL": "https://api.example.internal/hdnet/v1",
+  "OAUTH2_HOST": "https://sso.example.internal",
+  "TOKEN_ENDPOINT": "/oauth2/token",
+  "AUTHORIZATION_ENDPOINT": "/oauth2/authorize",
+  "REDIRECT_URI": "https://hdnet.example.internal/",
+  "CLIENT_ID": "hdnet-web",
+  "CLIENT_SECRET": "sample-7f3c9a2e-4b1d-4e8a-9c6f-2d5b8e1a0f47",
+  "LOG_LEVEL": "INFO"
+}
