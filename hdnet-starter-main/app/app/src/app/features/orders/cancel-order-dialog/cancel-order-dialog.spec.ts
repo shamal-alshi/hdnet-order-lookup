@@ -4,6 +4,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { OrdersApi } from '../orders.api';
 import { CancelOrderDialogComponent } from './cancel-order-dialog';
 import { Order } from '../../../shared/models';
+import { ToastService } from '../../../core/toast.service';
 
 const order: Order = {
   orderNumber: 'HD100312',
@@ -17,10 +18,12 @@ const order: Order = {
 describe('CancelOrderDialogComponent', () => {
   const dialogRef = { close: vi.fn() };
   const ordersApi = { cancelOrder: vi.fn() };
+  const toast = { error: vi.fn() };
 
   beforeEach(async () => {
     dialogRef.close.mockReset();
     ordersApi.cancelOrder.mockReset();
+    toast.error.mockReset();
 
     await TestBed.configureTestingModule({
       imports: [CancelOrderDialogComponent],
@@ -28,6 +31,7 @@ describe('CancelOrderDialogComponent', () => {
         { provide: MAT_DIALOG_DATA, useValue: order },
         { provide: MatDialogRef, useValue: dialogRef },
         { provide: OrdersApi, useValue: ordersApi },
+        { provide: ToastService, useValue: toast },
       ],
     }).compileComponents();
   });
@@ -55,5 +59,6 @@ describe('CancelOrderDialogComponent', () => {
 
     expect(dialogRef.close).not.toHaveBeenCalled();
     expect(component['errorMessage']()).toBe('Order can no longer be cancelled.');
+    expect(toast.error).toHaveBeenCalledWith('Order can no longer be cancelled.');
   });
 });

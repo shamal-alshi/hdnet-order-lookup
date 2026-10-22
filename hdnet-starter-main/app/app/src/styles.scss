@@ -36,4 +36,12 @@ body {
   margin: 0;
   height: 100%;
 }
+
+.toast-error .mat-mdc-snackbar-surface {
+  background: #8d1c1c !important;
+}
+
+.toast-success .mat-mdc-snackbar-surface {
+  background: #0e5a43 !important;
+}
 /* You can add global styles to this file, and also import other style files */

@@ -7,6 +7,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { finalize } from 'rxjs';
 import { AuthStore } from '../../core/auth.store';
+import { ToastService } from '../../core/toast.service';
 
 @Component({
   selector: 'app-login',
@@ -24,9 +25,9 @@ export class Login {
   private readonly formBuilder = inject(FormBuilder).nonNullable;
   private readonly auth = inject(AuthStore);
   private readonly router = inject(Router);
+  private readonly toast = inject(ToastService);
 
   protected readonly isSubmitting = signal(false);
-  protected readonly errorMessage = signal<string | null>(null);
 
   protected readonly form = this.formBuilder.group({
     username: ['', Validators.required],
@@ -39,7 +40,6 @@ export class Login {
       return;
     }
 
-    this.errorMessage.set(null);
     this.isSubmitting.set(true);
 
     this.auth
@@ -47,7 +47,7 @@ export class Login {
       .pipe(finalize(() => this.isSubmitting.set(false)))
       .subscribe({
         next: () => void this.router.navigateByUrl('/orders'),
-        error: () => this.errorMessage.set('Invalid username or password.'),
+        error: () => this.toast.error('Invalid username or password.'),
       });
   }
 }

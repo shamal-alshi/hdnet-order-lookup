@@ -6,6 +6,7 @@ import { OrderStatus } from '../../shared/models';
   selector: 'app-status-chip',
   template: `
     <span class="status-chip" [attr.data-status]="status()">
+      <span class="status-dot" aria-hidden="true"></span>
       {{ label() }}
     </span>
   `,
@@ -22,34 +23,42 @@ import { OrderStatus } from '../../shared/models';
       white-space: nowrap;
     }
 
+    .status-dot {
+      width: 0.38rem;
+      height: 0.38rem;
+      margin-right: 0.42rem;
+      border-radius: 50%;
+      background: currentcolor;
+    }
+
     [data-status='RECEIVED'] {
-      background: #dbeafe;
-      color: #1d4ed8;
+      background: #dff5ef;
+      color: #087f70;
     }
 
     [data-status='PROCESSING'] {
-      background: #fef3c7;
-      color: #92400e;
+      background: #fff1cf;
+      color: #9a6100;
     }
 
     [data-status='SENT_TO_PHARMACY'] {
-      background: #ede9fe;
-      color: #6d28d9;
+      background: #ebe9fc;
+      color: #5947a8;
     }
 
     [data-status='SHIPPED'] {
-      background: #cffafe;
-      color: #0e7490;
+      background: #dceff5;
+      color: #07647e;
     }
 
     [data-status='DELIVERED'] {
-      background: #dcfce7;
-      color: #15803d;
+      background: #def5e6;
+      color: #247344;
     }
 
     [data-status='CANCELLED'] {
-      background: #fee2e2;
-      color: #b91c1c;
+      background: #fae4e4;
+      color: #a82a2a;
     }
   `,
 })

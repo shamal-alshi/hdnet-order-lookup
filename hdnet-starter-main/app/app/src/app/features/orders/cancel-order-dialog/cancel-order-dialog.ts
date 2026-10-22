@@ -8,6 +8,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { finalize } from 'rxjs';
 import { ApiError, CancelReason, Order } from '../../../shared/models';
 import { OrdersApi } from '../orders.api';
+import { ToastService } from '../../../core/toast.service';
 
 const cancelReasons: { value: CancelReason; label: string }[] = [
   { value: 'CUSTOMER_REQUEST', label: 'Customer Request' },
@@ -33,6 +34,7 @@ export class CancelOrderDialogComponent {
   private readonly formBuilder = inject(FormBuilder).nonNullable;
   private readonly api = inject(OrdersApi);
   private readonly dialogRef = inject(MatDialogRef<CancelOrderDialogComponent>);
+  private readonly toast = inject(ToastService);
 
   protected readonly order = inject<Order>(MAT_DIALOG_DATA);
   protected readonly reasons = cancelReasons;
@@ -57,10 +59,11 @@ export class CancelOrderDialogComponent {
       .subscribe({
         next: (order) => this.dialogRef.close(order),
         error: (error: HttpErrorResponse) => {
-          this.errorMessage.set(
+          const message =
             (error.error as ApiError | undefined)?.message ??
-              'The order could not be cancelled. Please try again.',
-          );
+            'The order could not be cancelled. Please try again.';
+          this.errorMessage.set(message);
+          this.toast.error(message);
         },
       });
   }

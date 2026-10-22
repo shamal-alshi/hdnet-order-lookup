@@ -1,22 +1,25 @@
 <main class="login-page">
   <section class="login-panel" aria-labelledby="login-title">
-    <div class="brand">
-      <span class="brand-mark" aria-hidden="true">H</span>
-      <span>HDNet</span>
+    <div class="brand-lockup">
+      <div class="brand" aria-label="HDNet">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span>HDNet</span>
+      </div>
+      <span class="secure-label">Secure staff access</span>
     </div>
 
     <header class="intro">
-      <p class="eyebrow">PHARMACY HOME DELIVERY</p>
-      <h1 id="login-title">Order operations, simplified.</h1>
-      <p>Sign in to view and manage pharmacy home-delivery orders.</p>
+      <p class="eyebrow">HOME DELIVERY OPERATIONS</p>
+      <h1 id="login-title">Welcome back.</h1>
+      <p>Sign in to review pharmacy home-delivery orders and take action when you are authorised.</p>
     </header>
 
     <mat-card appearance="outlined">
+      <div class="card-heading">
+        <h2>Sign in to HDNet</h2>
+        <p>Use your assigned staff credentials.</p>
+      </div>
       <form [formGroup]="form" (ngSubmit)="submit()">
-        @if (errorMessage(); as message) {
-          <p class="error-message" role="alert">{{ message }}</p>
-        }
-
         <mat-form-field appearance="outline">
           <mat-label>Username</mat-label>
           <input
@@ -49,9 +52,10 @@
           type="submit"
           [disabled]="isSubmitting()"
         >
-          {{ isSubmitting() ? 'Signing in…' : 'Sign in' }}
+          {{ isSubmitting() ? 'Signing in…' : 'Sign In' }}
         </button>
       </form>
     </mat-card>
+    <p class="support-text">Need help accessing HDNet? Contact your team administrator.</p>
   </section>
 </main>

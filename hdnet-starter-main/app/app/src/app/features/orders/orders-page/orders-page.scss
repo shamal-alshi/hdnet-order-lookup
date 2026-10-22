@@ -1,118 +1,106 @@
 .app-toolbar {
-  padding: 0 2rem;
-  border-bottom: 1px solid #e2e8f0;
-  background: #fff;
+  min-height: 4.5rem;
+  padding: 0 2.5rem;
+  border-bottom: 1px solid #dce5ed;
+  background: rgb(255 255 255 / 92%);
+  backdrop-filter: blur(16px);
 }
 
 .brand {
   display: inline-flex;
   align-items: center;
   gap: 0.65rem;
-  color: #0f172a;
-  font-size: 1.05rem;
-  font-weight: 750;
+  color: #102a43;
+  font-size: 1.08rem;
+  font-weight: 760;
+  letter-spacing: -0.03em;
 }
 
 .brand-mark {
   display: grid;
-  width: 1.85rem;
-  height: 1.85rem;
+  width: 2rem;
+  height: 2rem;
   place-items: center;
-  border-radius: 0.5rem;
-  background: #1d4ed8;
+  border-radius: 0.6rem;
+  background: #0e5a70;
   color: #fff;
-  font-size: 0.85rem;
+  font-size: 0.88rem;
 }
 
-.toolbar-spacer {
-  flex: 1;
-}
+.toolbar-spacer { flex: 1; }
 
 .user-name {
   margin-right: 1rem;
-  color: #475569;
-  font-size: 0.9rem;
+  color: #486174;
+  font-size: 0.88rem;
+  font-weight: 650;
 }
 
 .orders-shell {
-  max-width: 78rem;
+  max-width: 80rem;
   margin: 0 auto;
-  padding: 3rem 2rem;
+  padding: 4rem 2.5rem;
 }
 
 .page-header {
-  margin-bottom: 2rem;
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  margin-bottom: 2.2rem;
 }
 
 .eyebrow {
-  margin: 0 0 0.75rem;
-  color: #2563eb;
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
+  margin: 0 0 0.7rem;
+  color: #087f70;
+  font-size: 0.7rem;
+  font-weight: 760;
+  letter-spacing: 0.14em;
 }
 
 h1 {
   margin: 0;
-  color: #0f172a;
-  font-size: clamp(2rem, 5vw, 2.6rem);
-  letter-spacing: -0.045em;
+  color: #102a43;
+  font-size: clamp(2.1rem, 5vw, 3rem);
+  letter-spacing: -0.06em;
+  line-height: 1;
 }
 
 .page-header p:last-child {
-  margin: 0.85rem 0 0;
-  color: #64748b;
+  max-width: 38rem;
+  margin: 0.95rem 0 0;
+  color: #60758a;
+  line-height: 1.55;
 }
 
 .orders-card {
   overflow: hidden;
-  border: 1px solid #e2e8f0;
-  border-radius: 1rem;
+  border: 1px solid #dce5ed;
+  border-radius: 1.1rem;
   background: #fff;
-  box-shadow: 0 1rem 2.5rem rgb(15 23 42 / 6%);
+  box-shadow: 0 1.2rem 3rem rgb(23 49 73 / 8%);
 }
 
-.table-wrap {
-  overflow-x: auto;
-}
-
-table {
-  width: 100%;
-}
+.table-wrap { overflow-x: auto; }
+table { width: 100%; }
 
 th {
   position: sticky;
   top: 0;
   z-index: 1;
-  background: #f8fafc;
-  color: #475569;
-  font-size: 0.72rem;
-  font-weight: 750;
-  letter-spacing: 0.06em;
+  background: #f6f9fb;
+  color: #60758a;
+  font-size: 0.69rem;
+  font-weight: 760;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
-tr.mat-mdc-row {
-  transition: background-color 160ms ease;
-}
+tr.mat-mdc-row { transition: background-color 160ms ease, box-shadow 160ms ease; }
+tr.mat-mdc-row:hover { background: #f3faf9; box-shadow: inset 3px 0 #20a58d; }
 
-tr.mat-mdc-row:hover {
-  background: #f8fafc;
-}
-
-.order-number {
-  color: #1e3a8a;
-  font-weight: 750;
-}
-
-.numeric-value {
-  font-variant-numeric: tabular-nums;
-}
-
-.actions-cell {
-  width: 1%;
-  white-space: nowrap;
-}
+.order-number { color: #0d5265; font-weight: 760; letter-spacing: 0.01em; }
+.numeric-value { font-variant-numeric: tabular-nums; }
+.actions-cell { width: 1%; white-space: nowrap; }
 
 .visually-hidden {
   position: absolute;
@@ -128,58 +116,35 @@ tr.mat-mdc-row:hover {
   display: grid;
   gap: 1rem;
   justify-items: start;
-  padding: 2rem;
+  padding: 2.4rem;
 }
 
 .loading-state p,
-.message-state p {
-  margin: 0;
-  color: #64748b;
-}
-
-.error-state {
-  color: #b91c1c;
-}
+.message-state p { margin: 0; color: #60758a; }
+.error-state { color: #9e2626; }
 
 .skeleton-line {
   width: 100%;
   height: 1rem;
   border-radius: 999px;
-  background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
+  background: linear-gradient(90deg, #edf2f5 25%, #f8fbfc 50%, #edf2f5 75%);
   background-size: 200% 100%;
   animation: shimmer 1.4s infinite;
 }
 
-.skeleton-line.wide {
-  height: 1.4rem;
-}
+.skeleton-line.wide { height: 1.45rem; width: 62%; }
 
-@keyframes shimmer {
-  to {
-    background-position: -200% 0;
-  }
-}
+@keyframes shimmer { to { background-position: -200% 0; } }
 
 @media (prefers-reduced-motion: reduce) {
   .skeleton-line,
-  tr.mat-mdc-row {
-    animation: none;
-    transition: none;
-  }
+  tr.mat-mdc-row { animation: none; transition: none; }
 }
 
 @media (max-width: 680px) {
   .app-toolbar,
-  .orders-shell {
-    padding-right: 1rem;
-    padding-left: 1rem;
-  }
-
-  .user-name {
-    display: none;
-  }
-
-  .orders-shell {
-    padding-top: 2rem;
-  }
+  .orders-shell { padding-right: 1rem; padding-left: 1rem; }
+  .user-name { display: none; }
+  .orders-shell { padding-top: 2.25rem; }
+  .page-header { margin-bottom: 1.5rem; }
 }

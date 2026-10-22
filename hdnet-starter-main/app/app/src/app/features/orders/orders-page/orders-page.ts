@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, effect, OnInit, inject } from '@angular/core';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
@@ -10,6 +10,7 @@ import { AuthStore } from '../../../core/auth.store';
 import { OrdersStore } from '../orders.store';
 import { CancelOrderDialogComponent } from '../cancel-order-dialog/cancel-order-dialog';
 import { Order } from '../../../shared/models';
+import { ToastService } from '../../../core/toast.service';
 
 
 @Component({
@@ -30,6 +31,7 @@ export class OrdersPage implements OnInit {
   private readonly auth = inject(AuthStore);
   private readonly router = inject(Router);
   private readonly dialog = inject(MatDialog);
+  private readonly toast = inject(ToastService);
 
   protected readonly store = inject(OrdersStore);
   protected readonly user = this.auth.user;
@@ -42,6 +44,16 @@ export class OrdersPage implements OnInit {
     'shipToState',
     'actions',
   ];
+
+  constructor() {
+    effect(() => {
+      const error = this.store.error();
+
+      if (error) {
+        this.toast.error(error);
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.store.load();
@@ -70,6 +82,7 @@ export class OrdersPage implements OnInit {
       .subscribe((updatedOrder: Order | undefined) => {
         if (updatedOrder) {
           this.store.replaceOrder(updatedOrder);
+          this.toast.success(`Order ${updatedOrder.orderNumber} was cancelled.`);
         }
       });
   }
